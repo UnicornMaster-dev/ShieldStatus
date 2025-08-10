@@ -1,12 +1,11 @@
 package walksy.shieldstatus.main;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import walksy.shieldstatus.manager.ConfigManager;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 
 
 public class ShieldStatus implements ModInitializer {

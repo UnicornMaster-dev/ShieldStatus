@@ -6,7 +6,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.ModelBaker;
@@ -17,10 +16,8 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-
+import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ModelTransformationMode;
-import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -32,7 +29,7 @@ public class ShieldRenderManager {
 
     public static ShieldRenderManager INSTANCE = new ShieldRenderManager();
 
-    public void render(ItemStack itemStack, ComponentMap componentMap, ModelTransformationMode mode, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, ShieldEntityModel shieldModel, int i, int j, boolean bl, CallbackInfo ci) {
+    public void render(ItemStack itemStack, ComponentMap componentMap, ItemDisplayContext mode, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, ShieldEntityModel shieldModel, int i, int j, boolean bl, CallbackInfo ci) {
         LivingEntity targetLivingEntity = this.findLivingEntityWithShield(itemStack);
         if (targetLivingEntity == null) {
             return;
@@ -43,7 +40,6 @@ public class ShieldRenderManager {
         boolean isShieldDisabled = ShieldDataManager.INSTANCE.disabledShields.stream()
             .anyMatch(playerStats -> playerStats.player.getUuid().equals(targetLivingEntity.getUuid()));
         final Color shieldColor = this.getColor(targetLivingEntity, isShieldDisabled);
-        MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.of("" + shieldColor));
         BannerPatternsComponent bannerPatternsComponent = componentMap != null
             ? componentMap.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)
             : BannerPatternsComponent.DEFAULT;
@@ -59,7 +55,7 @@ public class ShieldRenderManager {
         VertexConsumer vertexConsumer = spriteIdentifier.getSprite()
             .getTextureSpecificVertexConsumer(
                 ItemRenderer.getItemGlintConsumer(
-                    vertexConsumerProvider, shieldModel.getLayer(spriteIdentifier.getAtlasId()), mode == ModelTransformationMode.GUI, bl
+                    vertexConsumerProvider, shieldModel.getLayer(spriteIdentifier.getAtlasId()), mode == ItemDisplayContext.GUI, bl
                 )
             );
 

@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import walksy.shieldstatus.main.ShieldStatus;
 import walksy.shieldstatus.manager.ConfigManager;
 import walksy.shieldstatus.manager.ShieldDataManager;
 
